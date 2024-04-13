@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 export const TableEarthquakes = () => {
   const { earthquakes,onLoadEarthquakes,pagination,loadComments,saveNewComment } = useEarthquake();
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsDisplay,setCommentsDisplay] = useState([])
 
@@ -41,7 +41,7 @@ export const TableEarthquakes = () => {
     if(!newComment.comment) return Swal.fire('Atencion','El comentario debe contener algun texto','warning')
     saveNewComment({id:newComment.id,comment:newComment.comment})
       .then(response=>{
-        const{data,status} =response
+        const{status} =response
         if(status==201){
           setNewComment({id:0,comment:''})
           setModalCreateComment(false)
@@ -73,6 +73,7 @@ export const TableEarthquakes = () => {
         </Table.Head>
         <Table.Body className="divide-y">
           {earthquakes.map((earthquakes: Earthquake) => {
+            const dateToTime = new Date(earthquakes.attributes.time).toLocaleDateString('es')
             return (
               
                 <Table.Row
@@ -85,7 +86,7 @@ export const TableEarthquakes = () => {
                   <Table.Cell>{earthquakes.attributes.title}</Table.Cell>
                   <Table.Cell>{earthquakes.attributes.magnitude}</Table.Cell>
                   <Table.Cell>{earthquakes.attributes.place}</Table.Cell>
-                  <Table.Cell>{earthquakes.attributes.time}</Table.Cell>
+                  <Table.Cell>{dateToTime}</Table.Cell>
                   <Table.Cell>{earthquakes.attributes.tsunami ? 'SI':'NO'}</Table.Cell>
                   <Table.Cell>{earthquakes.attributes.mag_type}</Table.Cell>
                   <Table.Cell>
@@ -127,7 +128,7 @@ export const TableEarthquakes = () => {
             <ol>
               {commentsDisplay.length==0
                 ? 'Sin cometarios almacenados'
-                : commentsDisplay.map((comment,key)=>(<li key={comment.id}>{key+1}) {comment.body}</li>) )
+                : commentsDisplay.map((comment:{id:number,body:string},key)=>(<li key={comment.id}>{key+1}) {comment.body}</li>) )
               }
               
             </ol>
