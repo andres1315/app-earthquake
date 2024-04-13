@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { earthquakeReducer } from "../earthquake/slice/earthquakeSlice";
 
 export const store =  configureStore({
   reducer:{
-
+    earthquake: earthquakeReducer
   },
 })
 

@@ -1,7 +1,9 @@
-import React from 'react'
+import { TableEarthquakes } from '../components/TableEarthquakes'
 
 export const EarthquakesPage = () => {
   return (
-    <div>Earthquakes Page</div>
+   <>
+    <TableEarthquakes/>
+   </>
   )
 }
