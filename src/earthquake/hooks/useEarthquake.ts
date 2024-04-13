@@ -1,6 +1,6 @@
 import { EarthquakeApi } from "../../api/earthquakeApi"
 import { useAppDispatch, useAppSelector } from "../../store/hook"
-import { loadEarthquake } from "../slice/earthquakeSlice"
+import { changePerPage, loadEarthquake } from "../slice/earthquakeSlice"
 
 export const useEarthquake = () => {
   const {earthquakes,pagination} =  useAppSelector(state => state.earthquake)
@@ -28,6 +28,11 @@ export const useEarthquake = () => {
     })
   }
 
+  const onChangePerPage = (value:string)=>{
+    const qtyPerPage = Number(value)
+    dispatch(changePerPage(qtyPerPage))
+  }
+
   const saveNewComment=({id,comment}:{id:number, comment:string})=>{
     const data ={
       body:comment
@@ -45,6 +50,7 @@ export const useEarthquake = () => {
     pagination,
     onLoadEarthquakes,
     loadComments,
-    saveNewComment
+    saveNewComment,
+    onChangePerPage
   }
 }

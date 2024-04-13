@@ -7,7 +7,7 @@ import { CustomModal } from "./ModalComments";
 import Swal from "sweetalert2";
 
 export const TableEarthquakes = () => {
-  const { earthquakes,onLoadEarthquakes,pagination,loadComments,saveNewComment } = useEarthquake();
+  const { earthquakes,onLoadEarthquakes,pagination,loadComments,saveNewComment,onChangePerPage } = useEarthquake();
   const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsDisplay,setCommentsDisplay] = useState([])
@@ -20,7 +20,7 @@ export const TableEarthquakes = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalCreateComment, setModalCreateComment] = useState(false);
   useEffect(()=>{
-    onLoadEarthquakes(currentPage,itemsPerPage)
+    onLoadEarthquakes(currentPage,pagination.per_page)
   },[currentPage])
 
   const onShowComment = (id:number)=>{
@@ -29,6 +29,11 @@ export const TableEarthquakes = () => {
         setCommentsDisplay(res)
         setModalShow(true)
       })
+  }
+
+  const onChangeQtyView = (value:string)=>{
+    onChangePerPage(value)
+    onLoadEarthquakes(currentPage,Number(value))
   }
 
   const onCreateNewComment = (id:number)=>{
@@ -56,7 +61,15 @@ export const TableEarthquakes = () => {
   }
   return (
     <>
-    <div className="overflow-x-auto">
+      <div>
+        <label htmlFor="views" className="block text-sm font-medium leading-6 text-gray-900">Cantidad por pagina</label>
+        <select name="views" id="views" className="mb-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" defaultValue={pagination.per_page} onChange={(e)=>onChangeQtyView(e.target.value)}>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    <div className="overflow-x-auto h-[calc(100vh-8rem)]">
       <Table hoverable>
         <Table.Head>
           <Table.HeadCell>External Id</Table.HeadCell>
@@ -115,9 +128,9 @@ export const TableEarthquakes = () => {
           })}
         </Table.Body>
       </Table>
-      <PaginationTable qtyPerPage={itemsPerPage} totalList={pagination.total} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
 
     </div>
+    <PaginationTable qtyPerPage={itemsPerPage} totalList={pagination.total} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
     <CustomModal
         title="Comentarios"
         openModal={modalShow}

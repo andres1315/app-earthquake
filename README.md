@@ -1,30 +1,51 @@
-# React + TypeScript + Vite
+# Aplicacion Earthquake Past 30 Days
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**La aplicacion consume la api earthquake creada con ruby on rails, por defecto consuma la api desde http://localhost:3000/api. no se configuraron variables de entorno**
 
-Currently, two official plugins are available:
+**Para cambiar la url de la api se hace desde el origen src/api/earthquake.ts. constante URL_API**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Instalacion
 
-## Expanding the ESLint configuration
+```bash
+$ npm install
+```
+**Pasos para correr aplicacion**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Correr en ambiente de desarrollo 
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+$ npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Desplegar a productivo 
+
+```bash
+$ npm run build
+```
+
+
+
+
+## Endpoints
+
+**Obtener features**
+```bash
+  http://127.0.0.1:3000/api/features?page=1&per_page=2%27
+```
+**Obtener features filtrados por mag_type :Ejemplo md y ml** 
+```bash
+  http://127.0.0.1:3000/api/features?page=1&per_page=20&mag_type%5B%5D=md&mag_type%5B%5D=ml%27
+```
+
+**Agregar Comentario**
+```bash
+  http://127.0.0.1:3000/api/features/1/comments
+```
+
+# APLICACION WEB
+
+**https://github.com/andres1315/app-earthquake**
+
+* Ruby version  3.2.3
+
+* Rails version 7.1.3.2
